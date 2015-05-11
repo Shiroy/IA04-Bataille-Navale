@@ -2,4 +2,80 @@
 package Launch {
 	class Main
 }
+
+package Agent {
+	
+	class Harbor {
+		-lifePoint : int
+		-faction : Faction
+		-position : Position
+		-woodStock : int
+		
+		-createShip(template : ShipTemplate) : Ship
+		-addWoodStock(nmbr : int) : void
+	}
+	
+	enum Faction {
+		RED
+		BLUE
+	}
+	
+	abstract class Ship {
+		-lifePoint : int
+		-position : Position
+		-template : ShipTemplate
+		-faction : Faction	
+		-ammo : int
+		
+		+move(dest : Position) : bool
+		+shoot(target : Position) : bool
+	}
+	
+	class ShipTemplate {
+		-constructionCost : int	
+		-attackPower : int
+		-maxSpeed : int
+		-range : int
+		-viewRange : int
+		-initialLifePoint : int
+		-templateName : String
+	}
+	
+	interface HarborStrategy {
+		+action() : void
+	}
+	
+	interface ShipStrategy {
+		+action() : void
+	}
+	
+	class Environment {
+	
+	}
+	
+	interface EnvironmentStrategy {
+		+action() : void
+	}
+	
+	Ship *-- ShipStrategy
+	ShipTemplate --o Ship
+	
+	Harbor o-- Ship : attach harbor  
+	Harbor *-- HarborStrategy
+	
+	Environment *-- EnvironmentStrategy
+	
+}
+
+package Engine {
+	
+	class Map {
+	
+	}	
+	
+	Map *-- Harbor
+	Map *-- Ship
+}
+
+
 @enduml
