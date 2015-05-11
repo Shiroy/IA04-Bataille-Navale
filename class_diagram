@@ -1,3 +1,5 @@
 @startuml
-testdot
+package Launch {
+	class Main
+}
 @enduml
