@@ -68,11 +68,16 @@ package Agent {
 	package Environment {	
 	
 		class Environment {
+			
+			-behaviourStrategy : EnvironmentStrategy
+			+setStrategy(behaviour : EnvironmentStrategy) : void
+			+step(state : SimState) : void
 	
 		}
 	
 		interface EnvironmentStrategy {
-			+action() : void
+			+action(env: Environment, state : SimState) : void
+			+init(env : Environment) : void
 		}
 	
 	}
