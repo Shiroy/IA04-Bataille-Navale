@@ -22,4 +22,16 @@ public class ShipStrategyHazardous implements ShipStrategy {
         
 	}
 
+	@Override
+	public void shootReceived(Ship ship) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void ennemyKilled(Ship killer, Ship killed) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

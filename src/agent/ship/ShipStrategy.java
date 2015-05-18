@@ -26,8 +26,9 @@ public interface ShipStrategy {
 	 * the ship behavior. Use ship method to make the ship do something.
 	 *  
 	 * @param ship The ship which must be updated
+	 * @param state The actual simulation's state
 	 */
-	public void action(Ship ship);
+	public void action(Ship ship, SimState state);
 	
 	/**	 
 	 * Called when a shoot is received
