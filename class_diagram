@@ -6,65 +6,75 @@ package Application {
 }
 
 package Agent {
-	
-	class Harbor {
-		-lifePoint : int
-		-faction : Faction
-		-position : Position
-		-woodStock : int
+
+	package Ship {
+		class Ship {
+			-lifePoint : int
+			-position : Position
+			-template : ShipTemplate
+			-faction : Faction	
+			-ammo : int
 		
-		-createShip(template : ShipTemplate) : Ship
-		-addWoodStock(nmbr : int) : void
-	}
+			+move(dest : Position) : bool
+			+shoot(target : Position) : bool
+		}
 	
-	enum Faction {
-		RED
-		BLUE
-	}
+		class ShipTemplate {
+			-constructionCost : int	
+			-attackPower : int
+			-maxSpeed : int
+			-range : int
+			-viewRange : int
+			-initialLifePoint : int
+			-templateName : String
+		}
 	
-	class Ship {
-		-lifePoint : int
-		-position : Position
-		-template : ShipTemplate
-		-faction : Faction	
-		-ammo : int
+		class ShipFactory <<Singleton>> {
+			+getShipTemplate(templateName : string) : ShipTemplate
+		}
+		note left: The harbor use this\n to get the template to create\n a new ship.
 		
-		+move(dest : Position) : bool
-		+shoot(target : Position) : bool
+		interface ShipStrategy {
+			+action() : void
+		}
 	}
 	
-	class ShipTemplate {
-		-constructionCost : int	
-		-attackPower : int
-		-maxSpeed : int
-		-range : int
-		-viewRange : int
-		-initialLifePoint : int
-		-templateName : String
+	package Harbor {
+	
+		class Harbor {
+			-lifePoint : int
+			-faction : Faction
+			-position : Position
+			-woodStock : int
+		
+			-createShip(template : ShipTemplate) : Ship
+			-addWoodStock(nmbr : int) : void
+		}
+	
+		enum Faction {
+			RED
+			BLUE
+		}
+	
+	 
+	
+		interface HarborStrategy {
+			+action() : void
+		}
 	}
 	
-	class ShipFactory <<Singleton>> {
-		+getShipTemplate(templateName : string) : ShipTemplate
-	}
-	note left: The harbor use this\n to get the template to create\n a new ship. 
+	package Environment {	
 	
-	interface HarborStrategy {
-		+action() : void
-	}
+		class Environment {
 	
-	interface ShipStrategy {
-		+action() : void
-	}
+		}
 	
-	class Environment {
+		interface EnvironmentStrategy {
+			+action() : void
+		}
 	
 	}
-	
-	interface EnvironmentStrategy {
-		+action() : void
-	}
-	
-	Ship *-- ShipStrategy
+		Ship *-- ShipStrategy
 	ShipTemplate --o Ship
 	
 	Harbor o-- Ship : attach harbor  
