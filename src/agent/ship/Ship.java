@@ -15,7 +15,6 @@ public class Ship implements Steppable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @author antoine
 	 * 
 	 * Called at each tick of the simulation to update the agent 
 	 */
@@ -25,6 +24,12 @@ public class Ship implements Steppable {
 
 	}
 	
+	/**
+	 * Set the ship behavior strategy and init it.
+	 * 
+	 * The {@link agent.ship.ShipStrategy#init(Ship) init} is called to init the strategy.
+	 * @param behavior
+	 */
 	public void setStrategy(ShipStrategy behavior){
 		behaviourStrategy = behavior;
 		behaviourStrategy.init(this);
