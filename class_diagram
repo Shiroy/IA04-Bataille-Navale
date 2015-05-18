@@ -45,7 +45,7 @@ package Agent {
 		class Harbor {
 			-lifePoint : int
 			-faction : Faction
-			-position : Position
+			-position : Double2D
 			-woodStock : int
 		
 			-createShip(template : ShipTemplate) : Ship
