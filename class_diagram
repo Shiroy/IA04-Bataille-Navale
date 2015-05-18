@@ -15,8 +15,9 @@ package Agent {
 			-faction : Faction	
 			-ammo : int
 		
-			+move(dest : Position) : bool
-			+shoot(target : Position) : bool
+			+move(dest : Int2D) : bool
+			+shoot(target : Int2D) : bool
+			~timeBeforeShoot() : int
 		}
 	
 		class ShipTemplate {
