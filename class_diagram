@@ -1,6 +1,8 @@
 @startuml
-package Launch {
+package Application {
 	class Main
+	
+	class Viewer
 }
 
 package Agent {
@@ -20,7 +22,7 @@ package Agent {
 		BLUE
 	}
 	
-	abstract class Ship {
+	class Ship {
 		-lifePoint : int
 		-position : Position
 		-template : ShipTemplate
@@ -71,10 +73,17 @@ package Engine {
 	
 	class Map {
 	
-	}	
+	}
+	
+	class Simulation {
+		+start() : void
+		+step() : void
+	}
 	
 	Map *-- Harbor
 	Map *-- Ship
+	
+	Simulation *-- Map
 }
 
 
