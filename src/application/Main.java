@@ -3,6 +3,8 @@
  */
 package application;
 
+import application.state.BattleShipWithUI;
+
 /**
  * @author antoine
  *
@@ -10,11 +12,12 @@ package application;
 public class Main {
 
 	/**
+	 * Create the Simulation with an User Interface
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		BattleShipWithUI.main(args);
 	}
 
 }
