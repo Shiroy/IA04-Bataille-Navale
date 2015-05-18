@@ -1,7 +1,7 @@
 /**
  * 
  */
-package launch;
+package application;
 
 /**
  * @author antoine
