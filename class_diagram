@@ -59,7 +59,8 @@ package Agent {
 	 
 	
 		interface HarborStrategy {
-			+action() : void
+			+action(ship : Ship) : void
+			+init(ship : Ship) : void
 		}
 	}
 	

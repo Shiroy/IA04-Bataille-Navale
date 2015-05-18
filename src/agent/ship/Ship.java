@@ -12,8 +12,8 @@ import sim.engine.Steppable;
  */
 public class Ship implements Steppable {
 
-	
-	
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * @author antoine
 	 * 
@@ -21,8 +21,15 @@ public class Ship implements Steppable {
 	 */
 	@Override
 	public void step(SimState arg0) {
-		// TODO Auto-generated method stub
+		behaviourStrategy.action(this);
 
 	}
+	
+	public void setStrategy(ShipStrategy behavior){
+		behaviourStrategy = behavior;
+		behaviourStrategy.init(this);
+	}
+	
+	private ShipStrategy behaviourStrategy;
 
 }
