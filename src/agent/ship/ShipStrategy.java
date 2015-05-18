@@ -36,7 +36,7 @@ public interface ShipStrategy {
 	 * We assume that ships are excellent shooters and never shoot 
 	 * a friend.
 	 * 
-	 * @param ship The ship whicj received the shoot
+	 * @param ship The ship which received the shoot
 	 */
 	public void shootReceived(Ship ship);
 	
