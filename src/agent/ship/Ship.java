@@ -20,8 +20,8 @@ public class Ship implements Steppable {
 	 * Called at each tick of the simulation to update the agent 
 	 */
 	@Override
-	public void step(SimState arg0) {
-		behaviourStrategy.action(this);
+	public void step(SimState state) {
+		behaviourStrategy.action(this, state);
 
 	}
 	

@@ -3,6 +3,8 @@
  */
 package agent.ship;
 
+import sim.engine.SimState;
+
 /**
  * @author antoine
  *
@@ -27,6 +29,7 @@ public interface ShipStrategy {
 	 * the ship behavior. Use ship method to make the ship do something.
 	 *  
 	 * @param ship Ship The ship which must be updated
+	 * @param state The actual state of the simulation
 	 */
-	public void action(Ship ship);
+	public void action(Ship ship, SimState state);
 }
