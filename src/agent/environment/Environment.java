@@ -6,14 +6,23 @@ import sim.engine.Steppable;
 
 @SuppressWarnings("serial")
 public class Environment implements Steppable {
+	private EnvironmentStrategy behaviourStrategy;
 
 	public Environment() {
+		
 	}
 
 	@Override
 	public void step(SimState state) {
 		@SuppressWarnings("unused")
-		BattleShip bs = (BattleShip) state;		
+		BattleShip bs = (BattleShip) state;
+		behaviourStrategy.action(this);
 	}
+	
+	public void setStrategy(EnvironmentStrategy behaviour){
+		behaviourStrategy = behaviour;
+		behaviourStrategy.init(this);
+	}
+	
 
 }

@@ -1,6 +1,7 @@
 package agent.environment;
 
 public interface EnvironmentStrategy {
-	public void action();	
+	public void action(Environment env);
+	public void init(Environment env);
 
 }
