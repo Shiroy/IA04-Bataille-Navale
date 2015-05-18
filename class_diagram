@@ -43,6 +43,11 @@ package Agent {
 		-templateName : String
 	}
 	
+	class ShipFactory <<Singleton>> {
+		+getShipTemplate(templateName : string) : ShipTemplate
+	}
+	note left: The harbor use this\n to get the template to create\n a new ship. 
+	
 	interface HarborStrategy {
 		+action() : void
 	}
@@ -66,6 +71,8 @@ package Agent {
 	Harbor *-- HarborStrategy
 	
 	Environment *-- EnvironmentStrategy
+	
+	ShipFactory *-- ShipTemplate
 	
 }
 
