@@ -14,7 +14,7 @@ public class BattleShip extends SimState {
 
 	public static final int GRID_WIDTH = 100;
 	public static final int GRID_HEIGHT = 100;
-	SparseGrid2D map = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
+	public SparseGrid2D map = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 
 	/**
 	 * Default constructor
