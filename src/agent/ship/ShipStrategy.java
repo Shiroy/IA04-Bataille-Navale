@@ -3,6 +3,8 @@
  */
 package agent.ship;
 
+import sim.engine.SimState;
+
 /**
  * @author antoine
  *
@@ -45,4 +47,5 @@ public interface ShipStrategy {
 	 * @param killed The killed ship
 	 */
 	public void ennemyKilled(Ship killer, Ship killed);
+
 }
