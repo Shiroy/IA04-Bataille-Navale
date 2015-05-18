@@ -74,8 +74,7 @@ package Agent {
 		}
 	
 	}
-	
-	Ship *-- ShipStrategy
+		Ship *-- ShipStrategy
 	ShipTemplate --o Ship
 	
 	Harbor o-- Ship : attach harbor  
