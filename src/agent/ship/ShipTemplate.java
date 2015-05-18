@@ -20,7 +20,7 @@ public class ShipTemplate {
 	private int shootRange;
 	private int viewRange;
 	private int initialLifePoint;
-	private int templateName;
+	private String templateName;
 	
 	
 	public int getConstructionCost() {
@@ -44,7 +44,7 @@ public class ShipTemplate {
 	public int getInitialLifePoint() {
 		return initialLifePoint;
 	}
-	public int getTemplateName() {
+	public String getTemplateName() {
 		return templateName;
 	}
 	

@@ -28,8 +28,12 @@ public class Ship implements Steppable {
 	public void setStrategy(ShipStrategy behavior){
 		behaviourStrategy = behavior;
 		behaviourStrategy.init(this);
-	}
+	}	
 	
-	private ShipStrategy behaviourStrategy;
+	public ShipTemplate getTemplate() {
+		return template;
+	}
 
+	private ShipStrategy behaviourStrategy;	
+	private ShipTemplate template;
 }
