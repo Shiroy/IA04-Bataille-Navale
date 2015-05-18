@@ -16,7 +16,7 @@ public class Environment implements Steppable {
 	public void step(SimState state) {
 		@SuppressWarnings("unused")
 		BattleShip bs = (BattleShip) state;
-		behaviourStrategy.action(this);
+		behaviourStrategy.action(this, state);
 	}
 	
 	public void setStrategy(EnvironmentStrategy behaviour){
