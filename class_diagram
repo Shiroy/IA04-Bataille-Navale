@@ -14,6 +14,8 @@ package Agent {
 			-template : ShipTemplate
 			-faction : Faction	
 			-ammo : int
+			-messageQueue : Queue<Message>
+			-shootTimer : int
 		
 			+move(dest : Int2D) : bool
 			+shoot(target : Int2D) : bool
@@ -36,7 +38,36 @@ package Agent {
 		note left: The harbor use this\n to get the template to create\n a new ship.
 		
 		interface ShipStrategy {
-			+action() : void
+			+action(ship : Ship) : void
+			+init(ship : Ship) : void
+			+shootReceived(ship : Ship, shoot : ShootReceived) : void
+			+environementDamage(ship : Ship, envDmg : EnvironmentDamage) : void
+			+ennemyKilled(ship : Ship, killed : EnnemyKilled) : void 
+		}
+		
+		package ShipMessage {
+		
+			interface Message {
+				+getType() : int
+			}
+		
+			class ShootReceived {
+				-shooter : Ship
+				-damage : int
+			}
+		
+			class EnvironmentDamage {
+				-damage : int
+			}
+			
+			class EnnemyKilled {
+				-who : Ship
+			}
+			
+			Message --* Ship
+			ShootReceived --|> Message
+			EnvironmentDamage --|> Message
+			EnnemyKilled --|> Message
 		}
 	}
 	

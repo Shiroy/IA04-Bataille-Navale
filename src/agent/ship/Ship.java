@@ -20,6 +20,8 @@ public class Ship implements Steppable {
 	 */
 	@Override
 	public void step(SimState state) {
+		
+		
 		behaviourStrategy.action(this, state);
 
 	}
@@ -35,6 +37,10 @@ public class Ship implements Steppable {
 		behaviourStrategy.init(this);
 	}	
 	
+	/**
+	 * Return the strategy currently used.
+	 * @return
+	 */
 	public ShipTemplate getTemplate() {
 		return template;
 	}
