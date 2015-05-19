@@ -2,7 +2,7 @@ package agent.harbor;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
-import sim.util.Double2D;
+import sim.util.Int2D;
 import agent.ship.Ship;
 import agent.ship.ShipTemplate;
 
