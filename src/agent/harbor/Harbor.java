@@ -2,7 +2,7 @@ package agent.harbor;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
-import sim.util.Double2D;
+import sim.util.Int2D;
 import agent.ship.Ship;
 import agent.ship.ShipTemplate;
 
@@ -49,11 +49,11 @@ public class Harbor implements Steppable{
 		this.faction = faction;
 	}
 
-	public Double2D getPosition() {
+	public Int2D getPosition() {
 		return position;
 	}
 
-	public void setPosition(Double2D position) {
+	public void setPosition(Ing2D position) {
 		this.position = position;
 	}
 
@@ -76,7 +76,7 @@ public class Harbor implements Steppable{
 
 	private int life;
 	private Faction faction;
-	private Double2D position;
+	private Int2D position;
 	private int woodStock;
 	private HarborStrategy behaviourStrategy;
 
