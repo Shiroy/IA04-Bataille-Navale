@@ -9,17 +9,28 @@ package Agent {
 
 	package Ship {
 		class Ship {
+			..Ship state..
 			-lifePoint : int
 			-position : Position
-			-template : ShipTemplate
-			-faction : Faction	
-			-ammo : int
-			-messageQueue : Queue<Message>
 			-shootTimer : int
-		
+			-faction : Faction
+			-ammo : int
+			-behavior : ShipStrategy
+			..Ship feature..	
+			-template : ShipTemplate
+			..Message system..
+			-messageQueue : Queue<Message>						
+			__
+			+step(state : SimState) : void
+			..Actions..			 
 			+move(dest : Int2D) : bool
-			+shoot(target : Int2D) : bool
-			~timeBeforeShoot() : int
+			+shoot(target : Int2D) : bool			
+			.. State accessors ..			
+			~timeBeforeShoot() : int			
+			.. Message system ..			
+			+sendAMessage(msg : Message) : void
+			-handleAllMessage()
+			
 		}
 	
 		class ShipTemplate {
