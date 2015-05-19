@@ -53,7 +53,7 @@ public class Harbor implements Steppable{
 		return position;
 	}
 
-	public void setPosition(Ing2D position) {
+	public void setPosition(Int2D position) {
 		this.position = position;
 	}
 
