@@ -2,6 +2,10 @@ package application.state;
 
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
+import sim.util.Int2D;
+import agent.harbor.Faction;
+import agent.harbor.Harbor;
+import agent.harbor.HarborStrategyNormal;
 
 /**
  * This class represents the state of the simulation. At the beginning it
@@ -14,7 +18,7 @@ public class BattleShip extends SimState {
 
 	public static final int GRID_WIDTH = 100;
 	public static final int GRID_HEIGHT = 100;
-	public SparseGrid2D map = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
+	public final SparseGrid2D map = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
 
 	/**
 	 * Default constructor
@@ -30,16 +34,16 @@ public class BattleShip extends SimState {
 	public void start() {
 		super.start();
 
-		map = new SparseGrid2D(GRID_WIDTH, GRID_HEIGHT);
+		Harbor h = new Harbor(100, Faction.RED, new Int2D(GRID_HEIGHT / 4,
+				GRID_WIDTH / 2), 100, new HarborStrategyNormal());
+		map.setObjectLocation(h, GRID_HEIGHT / 4, GRID_WIDTH / 2);
+		schedule.scheduleRepeating(h);
 
-		/*
-		 * Harbor h = new Harbor(); map.setObjectLocation(h, GRID_HEIGHT / 4,
-		 * GRID_WIDTH / 2); schedule.scheduleRepeating(h);
-		 * 
-		 * Harbor h2 = new Harbor(); map.setObjectLocation(h2, GRID_HEIGHT * 3 /
-		 * 4, GRID_WIDTH / 2); schedule.scheduleRepeating(h2);
-		 */
-
+		Harbor h2 = new Harbor(100, Faction.BLUE, new Int2D(
+				GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2), 100,
+				new HarborStrategyNormal());
+		map.setObjectLocation(h2, GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2);
+		schedule.scheduleRepeating(h2);
 	}
 
 	/**
