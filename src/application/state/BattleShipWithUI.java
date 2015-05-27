@@ -98,6 +98,12 @@ public class BattleShipWithUI extends GUIState {
 	@Override
 	public void quit() {
 		super.quit();
+
+		if (displayFrame != null) {
+			displayFrame.dispose();
+			displayFrame = null;
+		}
+		display = null;
 	}
 
 	/**
