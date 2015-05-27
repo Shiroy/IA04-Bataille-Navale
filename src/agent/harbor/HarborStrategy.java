@@ -1,6 +1,7 @@
 package agent.harbor;
 
 import agent.ship.Ship;
+import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 
 public interface HarborStrategy {
@@ -10,28 +11,21 @@ public interface HarborStrategy {
 	 * 
 	 * @param harbor The harbor the Strategy was bounded to
 	 */
-	public void init(Harbor harbor);
+	public void init(Harbor harbor, SimState state);
 	
 	/**
 	 * Called every simulation cycle to update the strategy 
 	 * 
 	 * @param harbor The harbor the strategy was bounded to
 	 */
-	public void action(Harbor harbor);
+	public void action(Harbor harbor, SimState state);
 	
 	/**
 	 * Called when the harbor is under attack
 	 * 
 	 * @param harbor The harbor that is under attack
+	 * @param damage 
 	 */
-	public void attacked(Harbor harbor);
-	
-	/**
-	 * Called when the harbor is occupied by an other faction
-	 * 
-	 * @param harbor	The harbor that is occupied
-	 * @param occupant	The faction that occupy the harbor
-	 */
-	public void occupied(Harbor harbor, Faction occupant);
+	public void attacked(Harbor harbor, ShootReceived shoot);
 	
 }
