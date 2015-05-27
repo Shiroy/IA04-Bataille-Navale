@@ -106,4 +106,11 @@ public class Ship implements Steppable {
 	public Faction getFaction() {
 		return faction;
 	}
+
+	public Ship(ShipTemplate template) {
+		this.template = template;
+		//TODO add its first Strategy
+	}
+	
+	
 }
