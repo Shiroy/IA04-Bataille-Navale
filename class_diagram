@@ -90,7 +90,7 @@ package Agent {
 			-position : Double2D
 			-woodStock : int
 		
-			-createShip(template : ShipTemplate) : Ship
+			-createShip(name : String) : Ship
 			-addWoodStock(nmbr : int) : void
 		}
 	
