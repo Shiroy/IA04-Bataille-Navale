@@ -5,12 +5,14 @@ package agent.ship;
 
 import java.util.Queue;
 
+import agent.harbor.Faction;
 import agent.ship.ShipMessage.EnnemyKilled;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.Message;
 import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 import sim.engine.Steppable;
+import sim.util.Int2D;
 
 /**
  * @author antoine
@@ -75,6 +77,13 @@ public class Ship implements Steppable {
 		}
 	}
 	
+	public void shoot(Int2D direction)
+	{
+		if(shootCooldownEnd <= System.currentTimeMillis()){
+			
+		}
+	}
+	
 	/**
 	 * Notify the ship he has been strike by a missile
 	 * @param msg
@@ -90,4 +99,11 @@ public class Ship implements Steppable {
 	private ShipTemplate template;
 	
 	private Queue<Message> messageQueue;
+	
+	private int shootCooldownEnd = 0;
+	private Faction faction;
+
+	public Faction getFaction() {
+		return faction;
+	}
 }
