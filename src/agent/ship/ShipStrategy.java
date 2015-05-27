@@ -3,6 +3,9 @@
  */
 package agent.ship;
 
+import agent.ship.ShipMessage.EnnemyKilled;
+import agent.ship.ShipMessage.EnvironmentDamage;
+import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 
 /**
@@ -39,14 +42,16 @@ public interface ShipStrategy {
 	 * 
 	 * @param ship The ship which received the shoot
 	 */
-	public void shootReceived(Ship ship);
+	public void shootReceived(Ship ship, ShootReceived damage);
 	
 	/**
 	 * Called when the ship kill an ennemy.
 	 * 
 	 * @param killer The killer ship
-	 * @param killed The killed ship
+	 * @param killInfo The informations about the last kill
 	 */
-	public void ennemyKilled(Ship killer, Ship killed);
+	public void ennemyKilled(Ship killer, EnnemyKilled killInfo);
+	
+	public void environmentDamage(Ship victim, EnvironmentDamage damage);
 
 }
