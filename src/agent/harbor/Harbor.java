@@ -4,6 +4,7 @@ import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.Int2D;
 import agent.ship.Ship;
+import agent.ship.ShipFactory;
 import agent.ship.ShipTemplate;
 
 public class Harbor implements Steppable{
@@ -14,16 +15,21 @@ public class Harbor implements Steppable{
 	private static final long serialVersionUID = 1L;
 	@Override
 	public void step(SimState arg0) {
-		behaviourStrategy.action(this);
+		behaviourStrategy.action(this, arg0);
 	}
 	
 	/* 
 	 * Creat new ship with the given template at 
 	 * a position near the Harbor.
 	 */
-	public Ship createShip(ShipTemplate template){
-		//TODO 
-		return null;
+	public Ship createShip(String name){
+		ShipTemplate template = this.shipFactory.getShipTemplate(name);
+		if(template.getConstructionCost() <= this.woodStock){
+			
+		}
+		Ship newShip = new Ship(template);
+		this.woodStock = this.woodStock - template.getConstructionCost();
+		return newShip;
 	}
 	/*
 	 *  Add some wood if necessary 
@@ -31,7 +37,16 @@ public class Harbor implements Steppable{
 	public void addWoodStock(int num){
 		woodStock = woodStock + num;
 	}
+	/*
+	 * the harbor is damaged by enemy ship
+	 */
 	
+	public void damage(int damagePoint){
+		if(this.life > damagePoint)
+			this.life = this.life - damagePoint;
+		else
+			this.life = 0;
+	}
 	
 	public int getLife() {
 		return life;
@@ -69,9 +84,9 @@ public class Harbor implements Steppable{
 		return behaviourStrategy;
 	}
 
-	public void setBehaviourStrategy(HarborStrategy behaviour) {
+	public void setBehaviourStrategy(HarborStrategy behaviour,SimState state) {
 		this.behaviourStrategy = behaviour;
-		behaviourStrategy.init(this);
+		behaviourStrategy.init(this,state);
 	}
 
 	private int life;
@@ -79,6 +94,6 @@ public class Harbor implements Steppable{
 	private Int2D position;
 	private int woodStock;
 	private HarborStrategy behaviourStrategy;
-
+	private ShipFactory shipFactory = ShipFactory.getInstance();
 	
 }
