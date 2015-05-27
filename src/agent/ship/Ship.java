@@ -3,6 +3,12 @@
  */
 package agent.ship;
 
+import java.util.Queue;
+
+import agent.ship.ShipMessage.EnnemyKilled;
+import agent.ship.ShipMessage.EnvironmentDamage;
+import agent.ship.ShipMessage.Message;
+import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 
@@ -21,7 +27,7 @@ public class Ship implements Steppable {
 	@Override
 	public void step(SimState state) {
 		
-		
+		handleAllMessage();
 		behaviourStrategy.action(this, state);
 
 	}
@@ -44,7 +50,44 @@ public class Ship implements Steppable {
 	public ShipTemplate getTemplate() {
 		return template;
 	}
+	
+	private void handleAllMessage() {
+		Message msg;
+		
+		synchronized (messageQueue)
+		{
+			while ((msg = messageQueue.poll()) != null) {
+				switch (msg.getType()) {
+				case "ShootReceived":
+					behaviourStrategy.shootReceived(this, (ShootReceived) msg);
+					break;
+				case "EnnemyKilled":
+					behaviourStrategy.ennemyKilled(this, (EnnemyKilled) msg);
+					break;
+				case "EnvironmentDamage":
+					behaviourStrategy.environmentDamage(this,
+							(EnvironmentDamage) msg);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Notify the ship he has been strike by a missile
+	 * @param msg
+	 */
+	private void shipShot(ShootReceived msg)
+	{
+		synchronized (messageQueue) {
+			messageQueue.add(msg);
+		}
+	}
 
 	private ShipStrategy behaviourStrategy;	
 	private ShipTemplate template;
+	
+	private Queue<Message> messageQueue;
 }
