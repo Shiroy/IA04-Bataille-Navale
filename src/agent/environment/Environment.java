@@ -31,9 +31,10 @@ public class Environment implements Steppable {
 		behaviourStrategy.init(this);
 	}
 	
-	public void createTornado(){
+	public Tornado createTornado(){
 		Tornado tornado = new Tornado();
 		map.setObjectLocation(tornado, 50, 50);
+		return tornado;
 	}
 	
 

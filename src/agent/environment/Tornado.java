@@ -1,9 +1,11 @@
 package agent.environment;
 
-import application.state.BattleShip;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.util.Int2D;
+import agent.ship.Ship;
+import agent.ship.ShipMessage.EnvironmentDamage;
+import application.state.BattleShip;
 
 public class Tornado implements Steppable{
 
@@ -24,6 +26,11 @@ public class Tornado implements Steppable{
 		int x = location.x;
         @SuppressWarnings("unused")
         int y = location.y;
+	}
+	
+	public EnvironmentDamage createDamage(Ship target){
+		EnvironmentDamage ed = new EnvironmentDamage(20);
+		return ed;
 	}
 
 }
