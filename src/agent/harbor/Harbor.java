@@ -2,6 +2,7 @@ package agent.harbor;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Queue;
 
 import sim.engine.SimState;
 import sim.engine.Steppable;
@@ -11,8 +12,15 @@ import sim.util.Int2D;
 import agent.ship.Ship;
 import agent.ship.ShipFactory;
 import agent.ship.ShipTemplate;
+import agent.ship.ShipMessage.EnvironmentDamage;
+import agent.ship.ShipMessage.Message;
+import agent.ship.ShipMessage.ShootReceived;
 
 public class Harbor extends OvalPortrayal2D implements Steppable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private int life;
 	private Faction faction;
@@ -20,6 +28,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	private int woodStock;
 	private HarborStrategy behaviourStrategy;
 	private ShipFactory shipFactory = ShipFactory.getInstance();
+	private Queue<Message> messageQueue;
 	
 	public Harbor(int life, Faction faction, Int2D position, int woodStock,
 			HarborStrategy behaviourStrategy) {
@@ -31,19 +40,15 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		this.behaviourStrategy = behaviourStrategy;
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Override
 
 	public void step(SimState state) {
 		behaviourStrategy.action(this,state);
+		handleAllMessage();
 	}
 
 	/*
-	 * Create new ship with the given template at a position near the Harbor.
+	 * Create new ship with the given name at a position near the Harbor.
 	 */
 	public Ship createShip(String name){
 		ShipTemplate template = this.shipFactory.getShipTemplate(name);
@@ -74,6 +79,24 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 			this.life = 0;
 	}
 	
+	private void handleAllMessage(){
+		Message msg;
+		synchronized (messageQueue){
+			while(messageQueue.peek() != null){
+				msg = messageQueue.poll();
+				switch(msg.getType()){
+				case "ShootReceived":
+					behaviourStrategy.attacked(this, (ShootReceived)msg);
+					break;
+				case "EnvironmentDamage":
+					behaviourStrategy.environmentDamage(this, (EnvironmentDamage)msg);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
 
 	public int getLife() {
 		return life;
