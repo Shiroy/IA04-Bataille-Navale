@@ -1,6 +1,7 @@
 package agent.harbor;
 
 import agent.ship.Ship;
+import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 
@@ -27,5 +28,13 @@ public interface HarborStrategy {
 	 * @param damage 
 	 */
 	public void attacked(Harbor harbor, ShootReceived shoot);
+	
+	/**
+	 * Called when the harbor is damaged by environment
+	 * 
+	 * @param harbor The harbor that is damaged
+	 * @param damage The damage environment cost
+	 */
+	public void environmentDamage(Harbor harbor, EnvironmentDamage damage);
 	
 }

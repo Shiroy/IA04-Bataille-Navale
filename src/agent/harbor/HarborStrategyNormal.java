@@ -5,6 +5,7 @@ import sim.util.Int2D;
 import agent.ship.Ship;
 import agent.ship.ShipFactory;
 import agent.ship.ShipTemplate;
+import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.ShootReceived;
 import application.state.BattleShip;
 
@@ -38,6 +39,11 @@ public class HarborStrategyNormal implements HarborStrategy {
 	@Override
 	public void attacked(Harbor harbor, ShootReceived shoot) {
 		
+	}
+
+	@Override
+	public void environmentDamage(Harbor harbor, EnvironmentDamage damage) {
+		harbor.damage(damage.getDamage());
 	}
 
 }

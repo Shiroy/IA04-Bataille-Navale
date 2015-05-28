@@ -43,16 +43,17 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	}
 
 	/*
-	 * Creat new ship with the given template at a position near the Harbor.
+	 * Create new ship with the given template at a position near the Harbor.
 	 */
 	public Ship createShip(String name){
 		ShipTemplate template = this.shipFactory.getShipTemplate(name);
 		if(template.getConstructionCost() <= this.woodStock){
-			
+			Ship newShip = new Ship(template);
+			this.woodStock = this.woodStock - template.getConstructionCost();
+			return newShip;
 		}
-		Ship newShip = new Ship(template);
-		this.woodStock = this.woodStock - template.getConstructionCost();
-		return newShip;
+		else 
+			return null;
 	}
 
 	/*
@@ -63,7 +64,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	}
 
 	/*
-	 * the harbor is damaged by enemy ship
+	 * the harbor is damaged by enemy ship or environment
 	 */
 	
 	public void damage(int damagePoint){
