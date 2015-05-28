@@ -26,18 +26,26 @@ public class HarborStrategyNormal implements HarborStrategy {
 		//TODO add strategy for different type of ship
 		String shipName = null;// TODO Change the name
 		Ship newShip = harbor.createShip(shipName);
-		BattleShip bs = (BattleShip)state;
-		Int2D position = harbor.getPosition();
-		int x = position.x + 1; 
-		int y = position.y + 1;
-		bs.map.setObjectLocation(newShip, x, y);
-		bs.schedule.scheduleRepeating(newShip);
+		if(newShip != null){
+			BattleShip bs = (BattleShip)state;
+			Int2D position = harbor.getPosition();
+			int x = position.x + 1; 
+			int y = position.y + 1;
+			bs.map.setObjectLocation(newShip, x, y);
+			bs.schedule.scheduleRepeating(newShip);
+		}
+		else{
+			// Not enough wood
+		}
 		
-		//TODO Handle the messages. add alart message
+		//TODO Handle the messages. add alert message
 	}
 
 	@Override
 	public void attacked(Harbor harbor, ShootReceived shoot) {
+		harbor.damage(shoot.getDamage());
+		// Change strategy to Alarm
+		// Send alert message with shooter
 		
 	}
 
