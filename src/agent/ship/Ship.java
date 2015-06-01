@@ -3,6 +3,9 @@
  */
 package agent.ship;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import agent.harbor.Faction;
@@ -12,13 +15,15 @@ import agent.ship.ShipMessage.Message;
 import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 import sim.engine.Steppable;
+import sim.portrayal.DrawInfo2D;
+import sim.portrayal.simple.OvalPortrayal2D;
 import sim.util.Int2D;
 
 /**
  * @author antoine
  *
  */
-public class Ship implements Steppable {
+public class Ship extends OvalPortrayal2D implements Steppable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,6 +56,14 @@ public class Ship implements Steppable {
 	 */
 	public ShipTemplate getTemplate() {
 		return template;
+	}
+	
+	/**
+	 * Setter faction
+	 * @param faction the new faction
+	 */
+	public void setFaction(Faction faction) {
+		this.faction = faction;
 	}
 	
 	private void handleAllMessage() {
@@ -109,8 +122,24 @@ public class Ship implements Steppable {
 
 	public Ship(ShipTemplate template) {
 		this.template = template;
-		//TODO add its first Strategy
+		messageQueue = new LinkedList<Message>();
+		behaviourStrategy = new ShipStrategyHazardous();
 	}
-	
+
+	public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
+		graphics.setColor(new Color(96, 48, 0)); //Brown
+		int x = (int) (info.draw.x - info.draw.width / 2.0);
+		int y = (int) (info.draw.y - info.draw.height / 2.0);
+		int width = (int) (info.draw.width);
+		int height = (int) (info.draw.height);
+		graphics.fillOval(x, y, width, height);
+		
+		graphics.setColor(faction.toColor());
+		x = (int) (info.draw.x - info.draw.width / 4.0);
+		y = (int) (info.draw.y - info.draw.height / 4.0);
+		width = (int) (info.draw.width / 2.0);
+		height = (int) (info.draw.height / 2.0);
+		graphics.fillOval(x, y, width, height);
+	}
 	
 }

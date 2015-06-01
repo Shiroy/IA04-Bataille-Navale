@@ -48,11 +48,12 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	public Ship createShip(String name){
 		ShipTemplate template = this.shipFactory.getShipTemplate(name);
 		if(template.getConstructionCost() <= this.woodStock){
-			
+			Ship newShip = new Ship(template);
+			newShip.setFaction(faction);
+			this.woodStock = this.woodStock - template.getConstructionCost();
+			return newShip;
 		}
-		Ship newShip = new Ship(template);
-		this.woodStock = this.woodStock - template.getConstructionCost();
-		return newShip;
+		return null;
 	}
 
 	/*

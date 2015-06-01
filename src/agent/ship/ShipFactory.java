@@ -21,7 +21,12 @@ public class ShipFactory {
 	
 	private ShipFactory()
 	{
-		//TODO Create all the ship template
+		m_allShipTemplates = new HashMap<String, ShipTemplate>();
+		
+		ShipTemplate barkTemplate = new ShipTemplate(100, 10, 3, 2, 3, 5, 30, "Bark");
+		
+		m_allShipTemplates.put("Bark", barkTemplate);
+		//TODO Add other ship templates
 	}
 	
 	private HashMap<String, ShipTemplate> m_allShipTemplates;

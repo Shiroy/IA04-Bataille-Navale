@@ -1,8 +1,7 @@
 package agent.harbor;
 
-import agent.ship.Ship;
-import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
+import agent.ship.ShipMessage.ShootReceived;
 
 public interface HarborStrategy {
 	
