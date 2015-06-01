@@ -17,7 +17,7 @@ public class Tornado extends OvalPortrayal2D implements Steppable {
 	private TornadoStrategy behaviour;
 
 	public Tornado(SimState state) {
-		lifetime=3000;
+		lifetime=2000;
 		behaviour=new TornadoStrategy();
 	}
 
@@ -32,6 +32,9 @@ public class Tornado extends OvalPortrayal2D implements Steppable {
 	public void decrementLifetime(){
 		lifetime--;
 	}
+	public int getLifetime(){
+		return lifetime;
+	}
 	
 
 	public EnvironmentDamage createDamage(Ship target) {
@@ -40,10 +43,10 @@ public class Tornado extends OvalPortrayal2D implements Steppable {
 	}
 	public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
 		graphics.setColor(Color.white);
-		int x = (int) (info.draw.x - info.draw.width / 2.0);
-		int y = (int) (info.draw.y - info.draw.height / 2.0);
-		int width = (int) (info.draw.width);
-		int height = (int) (info.draw.height);
+		int x = (int) (info.draw.x - info.draw.width);
+		int y = (int) (info.draw.y - info.draw.height);
+		int width = (int) (info.draw.width*2);
+		int height = (int) (info.draw.height*2);
 		graphics.fillOval(x, y, width, height);
 
 	}
