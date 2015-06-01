@@ -1,31 +1,23 @@
 package agent.environment;
 
-import sim.display.GUIState;
 import sim.engine.SimState;
 import sim.engine.Steppable;
-import sim.portrayal.grid.SparseGridPortrayal2D;
+import sim.field.grid.SparseGrid2D;
 import application.state.BattleShip;
-import application.state.BattleShipWithUI;
 
 @SuppressWarnings("serial")
 public class Environment implements Steppable {
 	private EnvironmentStrategy behaviourStrategy;
 	private static Environment m_instance = null;
-	private SparseGridPortrayal2D mapPortrayal;
+	private SparseGrid2D map;
 	
-	public static Environment getInstance() {
+	public static Environment getInstance(BattleShip bs) {
 		if(m_instance == null)
-			m_instance = new Environment();
+			m_instance = new Environment(bs);
 		return m_instance;
 	}
-	
-	public void setMap(GUIState gui){
-		BattleShipWithUI bswu = (BattleShipWithUI) gui;
-		//this.mapPortrayal=bswu.getMap;
-	}
-
-	public Environment() {
-		
+	public Environment(BattleShip bs) {
+		map=bs.map;
 	}
 
 	@Override
@@ -39,9 +31,10 @@ public class Environment implements Steppable {
 		behaviourStrategy.init(this);
 	}
 	
-	public void createTornado(){
+	public Tornado createTornado(){
 		Tornado tornado = new Tornado();
-		mapPortrayal.setObjectPosition(tornado, null, null);
+		map.setObjectLocation(tornado, 50, 50);
+		return tornado;
 	}
 	
 
