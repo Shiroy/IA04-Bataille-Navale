@@ -88,7 +88,7 @@ public class Ship implements Steppable {
 	 * Notify the ship he has been strike by a missile
 	 * @param msg
 	 */
-	private void shipShot(ShootReceived msg)
+	public void shipShot(ShootReceived msg)
 	{
 		synchronized (messageQueue) {
 			messageQueue.add(msg);
