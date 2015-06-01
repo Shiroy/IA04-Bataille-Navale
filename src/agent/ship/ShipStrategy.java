@@ -37,8 +37,6 @@ public interface ShipStrategy {
 	 * Called when a shoot is received
 	 * 
 	 * This method is called when the ship received an ennemy shoot.
-	 * We assume that ships are excellent shooters and never shoot 
-	 * a friend.
 	 * 
 	 * @param ship The ship which received the shoot
 	 */
