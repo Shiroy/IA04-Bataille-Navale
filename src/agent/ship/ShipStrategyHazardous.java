@@ -21,16 +21,17 @@ public class ShipStrategyHazardous implements ShipStrategy {
 	public void action(Ship ship, SimState state) {
 		BattleShip bs = (BattleShip) state;
 
-		Int2D location = bs.map.getObjectLocation(this);
+		Int2D location = bs.map.getObjectLocation(ship);
 		int range = ship.getTemplate().getShootRange();
 		Bag result = new Bag();
 		IntBag xPos = new IntBag();
 		IntBag yPos = new IntBag();
-		bs.map.getRadialNeighborsAndLocations(location.x, location.y, range,
-				Grid2D.TOROIDAL, false, Grid2D.ALL, false, result, xPos, yPos);
-		
+		bs.map.getRadialNeighborsAndLocations(location.getX(), location.getY(),
+				range, Grid2D.TOROIDAL, false, Grid2D.ALL, false, result, xPos,
+				yPos);
+
 		boolean action = false;
-		
+
 		if (result.size() != 0) {
 			for (Object obj : result)
 				if (obj instanceof Ship) {
@@ -46,8 +47,9 @@ public class ShipStrategyHazardous implements ShipStrategy {
 			result = new Bag();
 			xPos = new IntBag();
 			yPos = new IntBag();
-			bs.map.getRadialNeighborsAndLocations(location.x, location.y, range,
-					Grid2D.TOROIDAL, false, Grid2D.ALL, false, result, xPos, yPos);
+			bs.map.getRadialNeighborsAndLocations(location.x, location.y,
+					range, Grid2D.TOROIDAL, false, Grid2D.ALL, false, result,
+					xPos, yPos);
 			for (Object obj : result)
 				if (obj instanceof Ship && !action) {
 					Ship s = (Ship) obj;
@@ -58,12 +60,29 @@ public class ShipStrategyHazardous implements ShipStrategy {
 					}
 				}
 		}
-		
+
+		if (!action) {
+			int xd = (state.random.nextInt(3) - 1);
+			int yd = (state.random.nextInt(3) - 1);
+			int xm = location.x + xd;
+			int ym = location.y + yd;
+			int max_x = location.x;
+			int max_y = location.y;
+			if (!(xd == 0 && yd == 0) && xm >= 0 && xm < BattleShip.GRID_WIDTH
+					&& ym >= 0 && ym < BattleShip.GRID_HEIGHT) {
+				max_x = xm;
+				max_y = ym;
+			}
+
+			bs.map.setObjectLocation(ship, new Int2D(max_x, max_y));
+
+		}
+
 	}
 
 	@Override
 	public void shootReceived(Ship ship, ShootReceived damage) {
-		//TODO
+		// TODO
 	}
 
 	@Override

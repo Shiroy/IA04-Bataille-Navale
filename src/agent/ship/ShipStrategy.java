@@ -3,10 +3,10 @@
  */
 package agent.ship;
 
+import sim.engine.SimState;
 import agent.ship.ShipMessage.EnnemyKilled;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.ShootReceived;
-import sim.engine.SimState;
 
 /**
  * @author antoine

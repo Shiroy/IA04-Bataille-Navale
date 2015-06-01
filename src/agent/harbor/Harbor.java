@@ -2,6 +2,7 @@ package agent.harbor;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import sim.engine.SimState;
@@ -29,7 +30,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	private HarborStrategy behaviourStrategy;
 	private ShipFactory shipFactory = ShipFactory.getInstance();
 	private Queue<Message> messageQueue;
-	
+
 	public Harbor(int life, Faction faction, Int2D position, int woodStock,
 			HarborStrategy behaviourStrategy) {
 		super(Color.BLACK, true);
@@ -38,27 +39,27 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		this.position = position;
 		this.woodStock = woodStock;
 		this.behaviourStrategy = behaviourStrategy;
+		this.messageQueue = new LinkedList<Message>();
 	}
 
 	@Override
-
 	public void step(SimState state) {
-		behaviourStrategy.action(this,state);
+		behaviourStrategy.action(this, state);
 		handleAllMessage();
 	}
 
 	/*
 	 * Create new ship with the given name at a position near the Harbor.
 	 */
-	public Ship createShip(String name){
+	public Ship createShip(String name) {
 		ShipTemplate template = this.shipFactory.getShipTemplate(name);
-		if(template.getConstructionCost() <= this.woodStock){
+		if (template.getConstructionCost() <= this.woodStock) {
 			Ship newShip = new Ship(template);
+			newShip.setFaction(faction);
 			this.woodStock = this.woodStock - template.getConstructionCost();
 			return newShip;
 		}
-		else 
-			return null;
+		return null;
 	}
 
 	/*
@@ -71,25 +72,26 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	/*
 	 * the harbor is damaged by enemy ship or environment
 	 */
-	
-	public void damage(int damagePoint){
-		if(this.life > damagePoint)
+
+	public void damage(int damagePoint) {
+		if (this.life > damagePoint)
 			this.life = this.life - damagePoint;
 		else
 			this.life = 0;
 	}
-	
-	private void handleAllMessage(){
+
+	private void handleAllMessage() {
 		Message msg;
-		synchronized (messageQueue){
-			while(messageQueue.peek() != null){
+		synchronized (messageQueue) {
+			while (messageQueue.peek() != null) {
 				msg = messageQueue.poll();
-				switch(msg.getType()){
+				switch (msg.getType()) {
 				case "ShootReceived":
-					behaviourStrategy.attacked(this, (ShootReceived)msg);
+					behaviourStrategy.attacked(this, (ShootReceived) msg);
 					break;
 				case "EnvironmentDamage":
-					behaviourStrategy.environmentDamage(this, (EnvironmentDamage)msg);
+					behaviourStrategy.environmentDamage(this,
+							(EnvironmentDamage) msg);
 					break;
 				default:
 					break;
@@ -134,9 +136,9 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		return behaviourStrategy;
 	}
 
-	public void setBehaviourStrategy(HarborStrategy behaviour,SimState state) {
+	public void setBehaviourStrategy(HarborStrategy behaviour, SimState state) {
 		this.behaviourStrategy = behaviour;
-		behaviourStrategy.init(this,state);
+		behaviourStrategy.init(this, state);
 	}
 
 	public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
@@ -147,7 +149,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		int width = (int) (info.draw.width * 2);
 		int height = (int) (info.draw.height * 2);
 		graphics.fillOval(x, y, width, height);
-		
+
 		graphics.setColor(faction.toColor());
 		x = (int) (info.draw.x - info.draw.width / 2.0);
 		y = (int) (info.draw.y - info.draw.height / 2.0);

@@ -10,32 +10,33 @@ public class Environment implements Steppable {
 	private EnvironmentStrategy behaviourStrategy;
 	private static Environment m_instance = null;
 	private SparseGrid2D map;
-	
+
 	public static Environment getInstance(BattleShip bs) {
-		if(m_instance == null)
+		if (m_instance == null)
 			m_instance = new Environment(bs);
 		return m_instance;
 	}
+
 	public Environment(BattleShip bs) {
-		map=bs.map;
+		map = bs.map;
 	}
 
 	@Override
 	public void step(SimState state) {
 		BattleShip bs = (BattleShip) state;
+		this.map=bs.map;
 		behaviourStrategy.action(this, bs);
 	}
-	
-	public void setStrategy(EnvironmentStrategy behaviour){
+
+	public void setStrategy(EnvironmentStrategy behaviour) {
 		behaviourStrategy = behaviour;
 		behaviourStrategy.init(this);
 	}
-	
-	public Tornado createTornado(){
+
+	public Tornado createTornado() {
 		Tornado tornado = new Tornado();
-		map.setObjectLocation(tornado, 50, 50);
+		map.setObjectLocation(tornado, (int)(Math.random()*100), (int)(Math.random()*100));
 		return tornado;
 	}
-	
 
 }

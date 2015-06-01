@@ -4,9 +4,9 @@ import java.awt.Color;
 
 public enum Faction {
 	RED, BLUE;
-	
-	Color toColor() {
-		switch(this) {
+
+	public Color toColor() {
+		switch (this) {
 		default:
 		case RED:
 			return Color.RED;

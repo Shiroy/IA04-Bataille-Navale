@@ -3,8 +3,6 @@ package agent.harbor;
 import sim.engine.SimState;
 import sim.util.Int2D;
 import agent.ship.Ship;
-import agent.ship.ShipFactory;
-import agent.ship.ShipTemplate;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.ShootReceived;
 import application.state.BattleShip;
@@ -14,31 +12,30 @@ public class HarborStrategyNormal implements HarborStrategy {
 	/**
 	 * The strategy for harbor when it is safe
 	 */
-	
+
 	@Override
 	public void init(Harbor harbor, SimState state) {
-		BattleShip bs = (BattleShip)state;
+		BattleShip bs = (BattleShip) state;
 		harbor.setPosition(bs.map.getObjectLocation(this));
 	}
 
 	@Override
 	public void action(Harbor harbor, SimState state) {
-		//TODO add strategy for different type of ship
-		String shipName = null;// TODO Change the name
+		// TODO add strategy for different type of ship
+		BattleShip bs = (BattleShip) state;
+		String shipName = "Bark";
 		Ship newShip = harbor.createShip(shipName);
-		if(newShip != null){
-			BattleShip bs = (BattleShip)state;
+		if (newShip != null) {
 			Int2D position = harbor.getPosition();
-			int x = position.x + 1; 
+			int x = position.x + 1;
 			int y = position.y + 1;
 			bs.map.setObjectLocation(newShip, x, y);
 			bs.schedule.scheduleRepeating(newShip);
-		}
-		else{
+		} else {
 			// Not enough wood
 		}
-		
-		//TODO Handle the messages. add alert message
+
+		// TODO Handle the messages. add alert message
 	}
 
 	@Override
@@ -46,7 +43,7 @@ public class HarborStrategyNormal implements HarborStrategy {
 		harbor.damage(shoot.getDamage());
 		// Change strategy to Alarm
 		// Send alert message with shooter
-		
+
 	}
 
 	@Override
