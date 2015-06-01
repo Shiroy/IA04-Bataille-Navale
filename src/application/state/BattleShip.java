@@ -3,6 +3,8 @@ package application.state;
 import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Int2D;
+import agent.environment.Environment;
+import agent.environment.EnvironmentStrategyHazardous;
 import agent.harbor.Faction;
 import agent.harbor.Harbor;
 import agent.harbor.HarborStrategyNormal;
@@ -45,6 +47,9 @@ public class BattleShip extends SimState {
 				new HarborStrategyNormal());
 		map.setObjectLocation(h2, GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2);
 		schedule.scheduleRepeating(h2);
+		
+		Environment env = new Environment(this, new EnvironmentStrategyHazardous());
+		schedule.scheduleRepeating(env);
 	}
 
 	/**
