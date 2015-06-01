@@ -2,6 +2,7 @@ package agent.harbor;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import sim.engine.SimState;
@@ -38,6 +39,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		this.position = position;
 		this.woodStock = woodStock;
 		this.behaviourStrategy = behaviourStrategy;
+		this.messageQueue = new LinkedList<Message>();
 	}
 
 	@Override
