@@ -25,6 +25,7 @@ public class ShipFactory {
 				"Bark");
 
 		m_allShipTemplates.put("Bark", barkTemplate);
+		m_allShipTemplates.put("Bark", barkTemplate);
 		// TODO Add other ship templates
 	}
 
