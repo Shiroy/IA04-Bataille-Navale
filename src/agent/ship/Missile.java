@@ -1,14 +1,17 @@
 package agent.ship;
 
-import agent.ship.ShipMessage.ShootReceived;
-import application.state.BattleShip;
+import java.awt.Color;
+
 import sim.engine.SimState;
 import sim.engine.Steppable;
+import sim.portrayal.simple.HexagonalPortrayal2D;
 import sim.util.Bag;
 import sim.util.Double2D;
 import sim.util.Int2D;
+import agent.ship.ShipMessage.ShootReceived;
+import application.state.BattleShip;
 
-public class Missile implements Steppable {
+public class Missile extends HexagonalPortrayal2D implements Steppable {
 
 	private static final long serialVersionUID = 1L;
 	Double2D direction;
@@ -18,7 +21,7 @@ public class Missile implements Steppable {
 	Ship launcher;
 	
 	public Missile(Double2D direction, Double2D origine, Ship launcher) {
-		super();
+		super(Color.BLACK);
 		this.direction = direction;
 		this.direction.normalize();
 		this.launcher = launcher;
