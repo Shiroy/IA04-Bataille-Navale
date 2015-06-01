@@ -12,6 +12,7 @@ public class Missile implements Steppable {
 
 	private static final long serialVersionUID = 1L;
 	Double2D direction;
+	Double2D pos;
 	private final int missileSpeed = 20; //En case / seconde 
 	private long lastTime = System.currentTimeMillis();
 	Ship launcher;
@@ -19,7 +20,9 @@ public class Missile implements Steppable {
 	public Missile(Double2D direction, Double2D origine, Ship launcher) {
 		super();
 		this.direction = direction;
+		this.direction.normalize();
 		this.launcher = launcher;
+		pos = origine;
 	}
 
 
@@ -28,14 +31,13 @@ public class Missile implements Steppable {
 		long deltaT = System.currentTimeMillis() - lastTime;
 		
 		BattleShip bs = (BattleShip)state;
-		Double2D position = bs.map.getObjectLocationAsDouble2D(this);
 		
 		Double2D deplacement = new Double2D(direction.getX() * missileSpeed * deltaT, direction.getY() * missileSpeed * deltaT);
-		position.add(deplacement);
+		pos.add(deplacement);
 		
 		//TODO Gérer les sortie de map;
 		
-		Int2D gridPos = new Int2D((int)Math.floor(position.x), (int)Math.floor(position.y)); 
+		Int2D gridPos = new Int2D((int)Math.floor(pos.x), (int)Math.floor(pos.y)); 
 		
 		bs.map.setObjectLocation(this, gridPos);
 		Bag allObjectInCell = bs.map.getObjectsAtLocation(gridPos.x, gridPos.y);
