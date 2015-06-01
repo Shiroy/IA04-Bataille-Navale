@@ -7,7 +7,7 @@ import agent.ship.Ship;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import application.state.BattleShip;
 
-public class Tornado implements Steppable{
+public class Tornado implements Steppable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,19 +16,19 @@ public class Tornado implements Steppable{
 
 	@Override
 	public void step(SimState state) {
-		
+
 	}
-	
-	public void action(SimState state){
-		BattleShip bs = (BattleShip)state;
-        Int2D location = bs.map.getObjectLocation(this);
-        @SuppressWarnings("unused")
+
+	public void action(SimState state) {
+		BattleShip bs = (BattleShip) state;
+		Int2D location = bs.map.getObjectLocation(this);
+		@SuppressWarnings("unused")
 		int x = location.x;
-        @SuppressWarnings("unused")
-        int y = location.y;
+		@SuppressWarnings("unused")
+		int y = location.y;
 	}
-	
-	public EnvironmentDamage createDamage(Ship target){
+
+	public EnvironmentDamage createDamage(Ship target) {
 		EnvironmentDamage ed = new EnvironmentDamage(20);
 		return ed;
 	}

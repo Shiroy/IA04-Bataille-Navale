@@ -8,16 +8,16 @@ import java.awt.Graphics2D;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import agent.harbor.Faction;
-import agent.ship.ShipMessage.EnnemyKilled;
-import agent.ship.ShipMessage.EnvironmentDamage;
-import agent.ship.ShipMessage.Message;
-import agent.ship.ShipMessage.ShootReceived;
 import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.portrayal.DrawInfo2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 import sim.util.Int2D;
+import agent.harbor.Faction;
+import agent.ship.ShipMessage.EnnemyKilled;
+import agent.ship.ShipMessage.EnvironmentDamage;
+import agent.ship.ShipMessage.Message;
+import agent.ship.ShipMessage.ShootReceived;
 
 /**
  * @author antoine

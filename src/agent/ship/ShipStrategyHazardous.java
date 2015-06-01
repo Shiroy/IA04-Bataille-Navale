@@ -63,15 +63,18 @@ public class ShipStrategyHazardous implements ShipStrategy {
 
 		if (!action) {
 			int xd = (state.random.nextInt(3) - 1);
-            int yd = (state.random.nextInt(3) - 1);
-            int xm = location.x + xd;
-            int ym = location.y + yd;
-            int max_x = location.x;
-            int max_y = location.y;
-            if (!(xd == 0 && yd == 0) && xm >= 0 && xm < bs.GRID_WIDTH && ym >= 0 && ym < bs.GRID_HEIGHT)
-                { max_x = xm; max_y = ym; }
+			int yd = (state.random.nextInt(3) - 1);
+			int xm = location.x + xd;
+			int ym = location.y + yd;
+			int max_x = location.x;
+			int max_y = location.y;
+			if (!(xd == 0 && yd == 0) && xm >= 0 && xm < BattleShip.GRID_WIDTH
+					&& ym >= 0 && ym < BattleShip.GRID_HEIGHT) {
+				max_x = xm;
+				max_y = ym;
+			}
 
-            bs.map.setObjectLocation(ship, new Int2D(max_x, max_y));
+			bs.map.setObjectLocation(ship, new Int2D(max_x, max_y));
 
 		}
 
