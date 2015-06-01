@@ -4,6 +4,8 @@ import sim.engine.SimState;
 import sim.field.grid.SparseGrid2D;
 import sim.util.Double2D;
 import sim.util.Int2D;
+import agent.environment.Environment;
+import agent.environment.EnvironmentStrategyHazardous;
 import agent.harbor.Faction;
 import agent.harbor.Harbor;
 import agent.harbor.HarborStrategyMassAttack;
@@ -50,6 +52,9 @@ public class BattleShip extends SimState {
 				new HarborStrategyMassAttack());
 		map.setObjectLocation(h2, GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2);
 		schedule.scheduleRepeating(h2);
+		
+		Environment env = new Environment(this, new EnvironmentStrategyHazardous());
+		schedule.scheduleRepeating(env);
 		
 		Ship ship = h2.createShip("Bark");
 		Missile m = new Missile(new Double2D(1, 0), new Double2D(20, 20), ship);
