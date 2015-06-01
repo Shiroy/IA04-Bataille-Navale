@@ -17,7 +17,6 @@ public class Missile extends HexagonalPortrayal2D implements Steppable {
 	Double2D direction;
 	Double2D pos;
 	private final int missileSpeed = 20; //En case / seconde 
-	private long lastTime = System.currentTimeMillis();
 	Ship launcher;
 	
 	public Missile(Double2D direction, Double2D origine, Ship launcher) {
@@ -31,11 +30,10 @@ public class Missile extends HexagonalPortrayal2D implements Steppable {
 
 	@Override
 	public void step(SimState state) {
-		long deltaT = System.currentTimeMillis() - lastTime;
 		
 		BattleShip bs = (BattleShip)state;
 		
-		Double2D deplacement = new Double2D(direction.getX() * missileSpeed * deltaT, direction.getY() * missileSpeed * deltaT);
+		Double2D deplacement = new Double2D(direction.getX() * missileSpeed, direction.getY() * missileSpeed);
 		pos.add(deplacement);
 		
 		//TODO Gérer les sortie de map;
@@ -52,9 +50,5 @@ public class Missile extends HexagonalPortrayal2D implements Steppable {
 				bs.map.remove(this);
 			}
 		}
-		
-		lastTime = System.currentTimeMillis();	
-		
-		
 	}
 }
