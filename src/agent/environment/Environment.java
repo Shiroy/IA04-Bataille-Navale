@@ -24,6 +24,7 @@ public class Environment implements Steppable {
 	@Override
 	public void step(SimState state) {
 		BattleShip bs = (BattleShip) state;
+		this.map=bs.map;
 		behaviourStrategy.action(this, bs);
 	}
 
@@ -34,7 +35,7 @@ public class Environment implements Steppable {
 
 	public Tornado createTornado() {
 		Tornado tornado = new Tornado();
-		map.setObjectLocation(tornado, 50, 50);
+		map.setObjectLocation(tornado, (int)(Math.random()*100), (int)(Math.random()*100));
 		return tornado;
 	}
 
