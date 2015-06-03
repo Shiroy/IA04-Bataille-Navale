@@ -8,16 +8,11 @@ import application.state.BattleShip;
 @SuppressWarnings("serial")
 public class Environment implements Steppable {
 	private EnvironmentStrategy behaviourStrategy;
-	private static Environment m_instance = null;
 	private SparseGrid2D map;
 
-	public static Environment getInstance(BattleShip bs) {
-		if (m_instance == null)
-			m_instance = new Environment(bs);
-		return m_instance;
-	}
 
-	public Environment(BattleShip bs) {
+	public Environment(BattleShip bs, EnvironmentStrategyHazardous behaviour) {
+		behaviourStrategy = behaviour;
 		map = bs.map;
 	}
 
@@ -28,14 +23,14 @@ public class Environment implements Steppable {
 		behaviourStrategy.action(this, bs);
 	}
 
-	public void setStrategy(EnvironmentStrategy behaviour) {
+	/*public void setStrategy(EnvironmentStrategyHazardous behaviour) {
 		behaviourStrategy = behaviour;
 		behaviourStrategy.init(this);
-	}
+	}*/
 
-	public Tornado createTornado() {
-		Tornado tornado = new Tornado();
-		map.setObjectLocation(tornado, (int)(Math.random()*100), (int)(Math.random()*100));
+	public Tornado createTornado(SimState state) {
+		Tornado tornado = new Tornado(state);
+		map.setObjectLocation(tornado, (int)(Math.random()*99), (int)(Math.random()*99));
 		return tornado;
 	}
 

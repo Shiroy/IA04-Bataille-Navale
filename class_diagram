@@ -42,6 +42,17 @@ package Agent {
 			-initialLifePoint : int
 			-templateName : String
 		}
+		
+		class Missile {
+			-direction : Double2D
+			-missileSpeed : int = 20
+			-launcher : Ship
+			-lastTime : long
+			
+			+step() : void
+		}
+		
+		Ship -- Missile : launch
 	
 		class ShipFactory <<Singleton>> {
 			+getShipTemplate(templateName : string) : ShipTemplate

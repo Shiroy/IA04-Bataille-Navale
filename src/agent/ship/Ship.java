@@ -12,6 +12,7 @@ import sim.engine.SimState;
 import sim.engine.Steppable;
 import sim.portrayal.DrawInfo2D;
 import sim.portrayal.simple.OvalPortrayal2D;
+import sim.util.Double2D;
 import sim.util.Int2D;
 import agent.harbor.Faction;
 import agent.ship.ShipMessage.EnnemyKilled;
@@ -90,7 +91,7 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 		}
 	}
 	
-	public void shoot(Int2D direction)
+	public void shoot(Double2D direction)
 	{
 		if(shootCooldownEnd <= System.currentTimeMillis()){
 			
@@ -101,7 +102,7 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 	 * Notify the ship he has been strike by a missile
 	 * @param msg
 	 */
-	private void shipShot(ShootReceived msg)
+	public void shipShot(ShootReceived msg)
 	{
 		synchronized (messageQueue) {
 			messageQueue.add(msg);

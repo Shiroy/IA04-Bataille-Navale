@@ -21,7 +21,7 @@ public class ShipFactory {
 	private ShipFactory() {
 		m_allShipTemplates = new HashMap<String, ShipTemplate>();
 
-		ShipTemplate barkTemplate = new ShipTemplate(100, 10, 3, 2, 3, 5, 50,
+		ShipTemplate barkTemplate = new ShipTemplate(100, 10, 3, 2, 3, 5, 30,
 				"Bark");
 		
 		ShipTemplate frigateTemplate = new ShipTemplate(20, 2, 8, 8, 2, 4, 10, 
