@@ -23,8 +23,39 @@ public class HarborStrategyNormal implements HarborStrategy {
 	public void action(Harbor harbor, SimState state) {
 		// TODO add strategy for different type of ship
 		BattleShip bs = (BattleShip) state;
-		String shipName = "Bark";
-		Ship newShip = harbor.createShip(shipName);
+		String shipName = harbor.getNextShip();
+		Ship newShip = null;
+		if(shipName != null){
+			newShip = harbor.createShip(shipName);
+		}
+		if (newShip != null) {
+			Int2D position = harbor.getPosition();
+			int x = position.x + 1;
+			int y = position.y + 1;
+			bs.map.setObjectLocation(newShip, x, y);
+			bs.schedule.scheduleRepeating(newShip);
+			harbor.count(shipName);
+		}
+		
+		harbor.setNextShip("Frigate");
+		if(harbor.getWoodStock() > 100){
+			int n = harbor.getFrigateNum();
+			if (n - (n/3)*3 == 0){
+				harbor.setNextShip("Bark");
+			}
+		}
+		else if(harbor.getFrigateNum()>harbor.getBarkNum()*3+9)
+			if (harbor.getWoodStock() > 200)
+				harbor.setNextShip("Bark");
+			else
+				harbor.setNextShip(null);
+			
+		
+		harbor.setNextShip("Frigate");
+		int n = harbor.getFrigateNum();
+		if (n - (n/3)*3 == 0){
+			harbor.setNextShip("Bark");
+		}
 		if (newShip != null) {
 			Int2D position = harbor.getPosition();
 			int x = position.x + 1;
@@ -32,9 +63,11 @@ public class HarborStrategyNormal implements HarborStrategy {
 			bs.map.setObjectLocation(newShip, x, y);
 			bs.schedule.scheduleRepeating(newShip);
 		} else {
-			// Not enough wood
+			harbor.setNextShip("Frigate");
 		}
-
+		
+		harbor.addWoodStock(10);
+		
 		// TODO Handle the messages. add alert message
 	}
 

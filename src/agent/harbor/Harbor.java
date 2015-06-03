@@ -17,6 +17,10 @@ import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.Message;
 import agent.ship.ShipMessage.ShootReceived;
 
+/**
+ * @author xianyu
+ *
+ */
 public class Harbor extends OvalPortrayal2D implements Steppable {
 	/**
 	 * 
@@ -30,6 +34,9 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	private HarborStrategy behaviourStrategy;
 	private ShipFactory shipFactory = ShipFactory.getInstance();
 	private Queue<Message> messageQueue;
+	private String nextShip = "Bark";
+	private int frigateNum = 0;
+	private int barkNum = 0;
 
 	public Harbor(int life, Faction faction, Int2D position, int woodStock,
 			HarborStrategy behaviourStrategy) {
@@ -53,13 +60,13 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	 */
 	public Ship createShip(String name) {
 		ShipTemplate template = this.shipFactory.getShipTemplate(name);
+		Ship newShip = null;
 		if (template.getConstructionCost() <= this.woodStock) {
-			Ship newShip = new Ship(template);
+			newShip = new Ship(template);
 			newShip.setFaction(faction);
 			this.woodStock = this.woodStock - template.getConstructionCost();
-			return newShip;
 		}
-		return null;
+		return newShip;
 	}
 
 	/*
@@ -79,6 +86,20 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		else
 			this.life = 0;
 	}
+	
+	public void count(String shipName){
+		switch(shipName){
+		case "Frigate":
+			this.frigateNum++;
+			break;
+		case "Bark":
+			this.barkNum++;
+			break;
+		default:
+			break;
+		}
+	}
+
 
 	private void handleAllMessage() {
 		Message msg;
@@ -100,21 +121,21 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		}
 	}
 
-	public int getLife() {
-		return life;
-	}
+//	public int getLife() {
+//		return life;
+//	}
 
-	public void setLife(int life) {
-		this.life = life;
-	}
+//	public void setLife(int life) {
+//		this.life = life;
+//	}
 
-	public Faction getFaction() {
-		return faction;
-	}
+//	public Faction getFaction() {
+//		return faction;
+//	}
 
-	public void setFaction(Faction faction) {
-		this.faction = faction;
-	}
+//	public void setFaction(Faction faction) {
+//		this.faction = faction;
+//	}
 
 	public Int2D getPosition() {
 		return position;
@@ -128,17 +149,33 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		return woodStock;
 	}
 
-	public void setWoodStock(int woodStock) {
-		this.woodStock = woodStock;
-	}
+//	public void setWoodStock(int woodStock) {
+//		this.woodStock = woodStock;
+//	}
 
-	public HarborStrategy getBehaviourStrategy() {
-		return behaviourStrategy;
-	}
+//	public HarborStrategy getBehaviourStrategy() {
+//		return behaviourStrategy;
+//	}
 
 	public void setBehaviourStrategy(HarborStrategy behaviour, SimState state) {
 		this.behaviourStrategy = behaviour;
 		behaviourStrategy.init(this, state);
+	}
+
+	public String getNextShip() {
+		return nextShip;
+	}
+
+	public void setNextShip(String nextShip) {
+		this.nextShip = nextShip;
+	}
+
+	public int getFrigateNum() {
+		return frigateNum;
+	}
+	
+	public int getBarkNum() {
+		return barkNum;
 	}
 
 	public final void draw(Object object, Graphics2D graphics, DrawInfo2D info) {
