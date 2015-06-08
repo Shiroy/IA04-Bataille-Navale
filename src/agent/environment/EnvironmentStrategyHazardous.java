@@ -11,7 +11,7 @@ public class EnvironmentStrategyHazardous implements EnvironmentStrategy{
 	@Override
 	public void action(Environment env, SimState state) {
 		BattleShip bs=(BattleShip) state;
-		int random = (int) (Math.random()*3000);
+		int random = (int) (Math.random()*2000);
 		if(random==10){
 			Tornado tor=env.createTornado(state);
 			bs.schedule.scheduleRepeating(tor);

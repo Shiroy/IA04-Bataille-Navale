@@ -17,7 +17,7 @@ public class Tornado extends OvalPortrayal2D implements Steppable {
 	private TornadoStrategy behaviour;
 
 	public Tornado(SimState state) {
-		lifetime=2000;
+		lifetime=4000;
 		behaviour=new TornadoStrategy();
 	}
 
