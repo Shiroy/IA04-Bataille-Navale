@@ -24,11 +24,11 @@ public class ShipFactory {
 		ShipTemplate barkTemplate = new ShipTemplate(100, 10, 3, 2, 3, 5, 30,
 				"Bark");
 		
-		ShipTemplate frigateTemplate = new ShipTemplate(20, 2, 8, 8, 2, 4, 10, 
+		ShipTemplate frigateTemplate = new ShipTemplate(20, 2, 8, 8, 4, 8, 10, 
 				"Frigate");
 
 		m_allShipTemplates.put("Bark", barkTemplate);
-		m_allShipTemplates.put("Frigate", barkTemplate);
+		m_allShipTemplates.put("Frigate", frigateTemplate);
 		// TODO Add other ship templates
 	}
 

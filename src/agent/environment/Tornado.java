@@ -14,11 +14,12 @@ public class Tornado extends OvalPortrayal2D implements Steppable {
 
 	private static final long serialVersionUID = 1L;
 	private int lifetime;
-	private TornadoStrategy behaviour;
+	private TornadoStrategyWind behaviour;
 
 	public Tornado(SimState state) {
-		lifetime=2000;
-		behaviour=new TornadoStrategy();
+		int randomLife = (int) (Math.random()*2000);
+		lifetime=2000 + randomLife;
+		behaviour=new TornadoStrategyWind();
 	}
 
 	@Override

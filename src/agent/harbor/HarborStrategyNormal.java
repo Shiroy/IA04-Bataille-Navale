@@ -40,7 +40,7 @@ public class HarborStrategyNormal implements HarborStrategy {
 		harbor.setNextShip("Frigate");
 		if(harbor.getWoodStock() > 100){
 			int n = harbor.getFrigateNum();
-			if (n - (n/3)*3 == 0){
+			if (n % 3  == 0){
 				harbor.setNextShip("Bark");
 			}
 		}
@@ -66,8 +66,11 @@ public class HarborStrategyNormal implements HarborStrategy {
 			harbor.setNextShip("Frigate");
 		}
 		
+<<<<<<< HEAD
 		//harbor.addWoodStock(10);
 		
+=======
+>>>>>>> a60bf37ead412399af8216a5be5582dc82e3978c
 		// TODO Handle the messages. add alert message
 	}
 

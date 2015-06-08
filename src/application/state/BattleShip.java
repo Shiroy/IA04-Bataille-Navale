@@ -40,27 +40,32 @@ public class BattleShip extends SimState {
 	public void start() {
 		super.start();
 		map.clear();
-		
 
 		Harbor h = new Harbor(100, Faction.RED, new Int2D(GRID_HEIGHT / 4,
+<<<<<<< HEAD
 				GRID_WIDTH / 2), 1000, new HarborStrategyNormal());
+=======
+				GRID_WIDTH / 2), 500, new HarborStrategyNormal(), this);
+
+>>>>>>> a60bf37ead412399af8216a5be5582dc82e3978c
 		map.setObjectLocation(h, GRID_HEIGHT / 4, GRID_WIDTH / 2);
 		schedule.scheduleRepeating(h);
 
 		Harbor h2 = new Harbor(100, Faction.BLUE, new Int2D(
+<<<<<<< HEAD
 				GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2), 10,
 				new HarborStrategyMassAttack());
+=======
+				GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2), 500,
+				new HarborStrategyMassAttack(), this);
+>>>>>>> a60bf37ead412399af8216a5be5582dc82e3978c
 		map.setObjectLocation(h2, GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2);
 		schedule.scheduleRepeating(h2);
-		
-		Environment env = new Environment(this, new EnvironmentStrategyHazardous());
+
+		Environment env = new Environment(this,
+				new EnvironmentStrategyHazardous());
 		schedule.scheduleRepeating(env);
-		
-		Ship ship = h2.createShip("Bark");
-		Missile m = new Missile(new Double2D(1, 0), new Double2D(20, 20), ship);
-		map.setObjectLocation(m, 20, 20);
-		schedule.scheduleRepeating(m);
-		
+
 	}
 
 	/**
