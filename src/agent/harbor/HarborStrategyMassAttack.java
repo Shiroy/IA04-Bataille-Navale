@@ -25,18 +25,10 @@ public class HarborStrategyMassAttack implements HarborStrategy {
 		BattleShip bs = (BattleShip) state;
 
 		if (harbor.getWoodStock() >= 1000) {
-			String shipName = "Bark";
+			String shipName = "Bark";			
+				
 			Ship newShip = harbor.createShip(shipName);
-			while (newShip != null) {
-				Int2D position = harbor.getPosition();
-				int x = position.x - 1 + state.random.nextInt(3);
-				int y = position.y - 1 + state.random.nextInt(3);
-				while (x == position.x && y == position.y) {
-					x = position.x - 1 + state.random.nextInt(3);
-					y = position.y - 1 + state.random.nextInt(3);
-				}
-				bs.map.setObjectLocation(newShip, x, y);
-				bs.schedule.scheduleRepeating(newShip);
+			while (newShip != null) {				
 				newShip = harbor.createShip(shipName);
 			}
 		}

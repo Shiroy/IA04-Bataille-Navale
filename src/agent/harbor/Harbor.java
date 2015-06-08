@@ -16,6 +16,7 @@ import agent.ship.ShipTemplate;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.Message;
 import agent.ship.ShipMessage.ShootReceived;
+import application.state.BattleShip;
 
 public class Harbor extends OvalPortrayal2D implements Steppable {
 	/**
@@ -30,6 +31,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	private HarborStrategy behaviourStrategy;
 	private ShipFactory shipFactory = ShipFactory.getInstance();
 	private Queue<Message> messageQueue;
+	private BattleShip state;
 
 	public Harbor(int life, Faction faction, Int2D position, int woodStock,
 			HarborStrategy behaviourStrategy) {
@@ -44,6 +46,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 
 	@Override
 	public void step(SimState state) {
+		this.state = (BattleShip)state;
 		behaviourStrategy.action(this, state);
 		handleAllMessage();
 	}
@@ -52,9 +55,18 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	 * Create new ship with the given name at a position near the Harbor.
 	 */
 	public Ship createShip(String name) {
+		Int2D position = getPosition();
+		int x = position.x - 1 + state.random.nextInt(3);
+		int y = position.y - 1 + state.random.nextInt(3);
+		
+		while (x == position.x && y == position.y) {
+			x = position.x - 1 + state.random.nextInt(3);
+			y = position.y - 1 + state.random.nextInt(3);
+		}
+		
 		ShipTemplate template = this.shipFactory.getShipTemplate(name);
 		if (template.getConstructionCost() <= this.woodStock) {
-			Ship newShip = new Ship(template);
+			Ship newShip = new Ship(template, position, state);
 			newShip.setFaction(faction);
 			this.woodStock = this.woodStock - template.getConstructionCost();
 			return newShip;

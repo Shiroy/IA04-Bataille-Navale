@@ -74,7 +74,7 @@ public class ShipStrategyHazardous implements ShipStrategy {
 				max_y = ym;
 			}
 
-			bs.map.setObjectLocation(ship, new Int2D(max_x, max_y));
+			ship.move(new Int2D(max_x, max_y));
 
 		}
 
