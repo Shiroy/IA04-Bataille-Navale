@@ -41,7 +41,7 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	private int barkNum = 0;
 
 	public Harbor(int life, Faction faction, Int2D position, int woodStock,
-			HarborStrategy behaviourStrategy) {
+			HarborStrategy behaviourStrategy, SimState state) {
 		super(Color.BLACK, true);
 		this.life = life;
 		this.faction = faction;
@@ -49,11 +49,12 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		this.woodStock = woodStock;
 		this.behaviourStrategy = behaviourStrategy;
 		this.messageQueue = new LinkedList<Message>();
+		this.state = (BattleShip)state;
 	}
 
 	@Override
 	public void step(SimState state) {
-		this.state = (BattleShip)state;
+		
 		behaviourStrategy.action(this, state);
 		handleAllMessage();
 	}

@@ -43,13 +43,13 @@ public class BattleShip extends SimState {
 		
 
 		Harbor h = new Harbor(100, Faction.RED, new Int2D(GRID_HEIGHT / 4,
-				GRID_WIDTH / 2), 1200, new HarborStrategyNormal());
+				GRID_WIDTH / 2), 1200, new HarborStrategyNormal(), this);
 		map.setObjectLocation(h, GRID_HEIGHT / 4, GRID_WIDTH / 2);
 		schedule.scheduleRepeating(h);
 
 		Harbor h2 = new Harbor(100, Faction.BLUE, new Int2D(
 				GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2), 1200,
-				new HarborStrategyMassAttack());
+				new HarborStrategyMassAttack(), this);
 		map.setObjectLocation(h2, GRID_HEIGHT * 3 / 4, GRID_WIDTH / 2);
 		schedule.scheduleRepeating(h2);
 		

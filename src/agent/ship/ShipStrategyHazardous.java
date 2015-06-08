@@ -1,8 +1,11 @@
 package agent.ship;
 
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
+
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Bag;
+import sim.util.Double2D;
 import sim.util.Int2D;
 import sim.util.IntBag;
 import agent.ship.ShipMessage.EnnemyKilled;
@@ -39,10 +42,12 @@ public class ShipStrategyHazardous implements ShipStrategy {
 			for (Object obj : result)
 				if (obj instanceof Ship) {
 					Ship s = (Ship) obj;
-					if (s.getFaction() != ship.getFaction()) {
+					if (s.getFaction() != ship.getFaction() && s != ship) {
 						// TODO
-						; // Attack the ship
+						
+						Int2D direction = new Int2D(s.getPosition().x - ship.getPosition().x, s.getPosition().y - ship.getPosition().y);
 						action = true; // If attack succeed
+						ship.shoot(new Double2D(direction));
 					}
 				}
 		} else {

@@ -179,4 +179,8 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 		graphics.fillOval(x, y, width, height);
 	}
 	
+	public Int2D getPosition() {
+		return position;
+	}
+	
 }
