@@ -1,7 +1,5 @@
 package agent.ship;
 
-import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
-
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Bag;
