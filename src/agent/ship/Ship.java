@@ -73,7 +73,7 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 		if(nbTickToWaitToMove > 0)
 			return false;
 		
-		if(position.distanceSq(this.position) > 1)
+		if(position.distanceSq(this.position) > 2)
 			return false;
 		
 		this.position = position;

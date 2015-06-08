@@ -12,13 +12,16 @@ import application.state.BattleShip;
 
 public class ShipStrategyHazardous implements ShipStrategy {
 
+	private int waitForMove;
+
 	@Override
 	public void init(Ship ship) {
-
+		waitForMove = 0;
 	}
 
 	@Override
 	public void action(Ship ship, SimState state) {
+		waitForMove--;
 		BattleShip bs = (BattleShip) state;
 
 		Int2D location = bs.map.getObjectLocation(ship);
@@ -62,20 +65,26 @@ public class ShipStrategyHazardous implements ShipStrategy {
 		}
 
 		if (!action) {
-			int xd = (state.random.nextInt(3) - 1);
-			int yd = (state.random.nextInt(3) - 1);
-			int xm = location.x + xd;
-			int ym = location.y + yd;
-			int max_x = location.x;
-			int max_y = location.y;
-			if (!(xd == 0 && yd == 0) && xm >= 0 && xm < BattleShip.GRID_WIDTH
-					&& ym >= 0 && ym < BattleShip.GRID_HEIGHT) {
-				max_x = xm;
-				max_y = ym;
+			if (waitForMove <= 0) {
+				int xd = (state.random.nextInt(3) - 1);
+				int yd = (state.random.nextInt(3) - 1);
+				int xm = location.x + xd;
+				int ym = location.y + yd;
+				if (xm < 0)
+					xm = bs.map.getWidth() + xm;
+				else if (xm >= bs.map.getWidth())
+					xm -= bs.map.getWidth();
+				if (ym < 0)
+					ym = bs.map.getHeight() + ym;
+				else if (ym >= bs.map.getHeight())
+					ym -= bs.map.getHeight();
+				System.out.println(bs.map.getHeight());
+				System.out.println(xm + " " + ym);
+				ship.move(new Int2D(xm, ym));
+				waitForMove = 5;
 			}
 
-			ship.move(new Int2D(max_x, max_y));
-
+			
 		}
 
 	}
