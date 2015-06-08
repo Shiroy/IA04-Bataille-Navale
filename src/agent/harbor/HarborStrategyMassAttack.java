@@ -40,6 +40,8 @@ public class HarborStrategyMassAttack implements HarborStrategy {
 				newShip = harbor.createShip(shipName);
 			}
 		}
+		
+		harbor.addWoodStock(10);
 
 		// TODO Handle the messages. add alert message
 	}

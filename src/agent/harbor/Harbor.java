@@ -16,6 +16,7 @@ import agent.ship.ShipTemplate;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.Message;
 import agent.ship.ShipMessage.ShootReceived;
+import application.state.BattleShip;
 
 /**
  * @author xianyu
@@ -53,6 +54,10 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 	public void step(SimState state) {
 		behaviourStrategy.action(this, state);
 		handleAllMessage();
+		if(this.getLife() == 0){
+			System.out.println(this.getFaction()+" Destroyed");
+			this.destory(state);
+		}
 	}
 
 	/*
@@ -64,7 +69,8 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		if (template.getConstructionCost() <= this.woodStock) {
 			newShip = new Ship(template);
 			newShip.setFaction(faction);
-			this.woodStock = this.woodStock - template.getConstructionCost();
+			this.woodStock = this.woodStock - 
+					template.getConstructionCost();
 		}
 		return newShip;
 	}
@@ -99,8 +105,22 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 			break;
 		}
 	}
+	
+	// TODO
+	public void destory(SimState state){
+		BattleShip bs = (BattleShip)state;
+		bs.map.remove(this);
+	}
 
-
+	/**
+	 * Called by other ships or environment to do a damage
+	 * 
+	 * @param msg The damage message
+	 */
+	public void receiveMessage(Message msg){
+		messageQueue.offer(msg);
+	}
+	
 	private void handleAllMessage() {
 		Message msg;
 		synchronized (messageQueue) {
@@ -108,7 +128,8 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 				msg = messageQueue.poll();
 				switch (msg.getType()) {
 				case "ShootReceived":
-					behaviourStrategy.attacked(this, (ShootReceived) msg);
+					behaviourStrategy.attacked(this, 
+							(ShootReceived) msg);
 					break;
 				case "EnvironmentDamage":
 					behaviourStrategy.environmentDamage(this,
@@ -121,17 +142,17 @@ public class Harbor extends OvalPortrayal2D implements Steppable {
 		}
 	}
 
-//	public int getLife() {
-//		return life;
-//	}
+	public int getLife() {
+		return life;
+	}
 
 //	public void setLife(int life) {
 //		this.life = life;
 //	}
 
-//	public Faction getFaction() {
-//		return faction;
-//	}
+	public Faction getFaction() {
+		return faction;
+	}
 
 //	public void setFaction(Faction faction) {
 //		this.faction = faction;

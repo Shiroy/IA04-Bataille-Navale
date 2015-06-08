@@ -5,6 +5,7 @@ import sim.field.grid.Grid2D;
 import sim.util.Bag;
 import sim.util.Int2D;
 import sim.util.IntBag;
+import agent.harbor.Harbor;
 import agent.ship.ShipMessage.EnnemyKilled;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.ShootReceived;
@@ -43,6 +44,13 @@ public class ShipStrategyHazardous implements ShipStrategy {
 						// TODO
 						; // Attack the ship
 						action = true; // If attack succeed
+					}
+				}
+				else if(obj instanceof Harbor){
+					Harbor h = (Harbor)obj;
+					if (h.getFaction() != ship.getFaction()) {
+						ShootReceived shoot = new ShootReceived(ship.getTemplate().getAttackPower(),ship);
+						h.receiveMessage(shoot);
 					}
 				}
 		} else {
