@@ -78,8 +78,6 @@ public class ShipStrategyHazardous implements ShipStrategy {
 					ym = bs.map.getHeight() + ym;
 				else if (ym >= bs.map.getHeight())
 					ym -= bs.map.getHeight();
-				System.out.println(bs.map.getHeight());
-				System.out.println(xm + " " + ym);
 				bs.map.setObjectLocation(ship, new Int2D(xm, ym));
 				waitForMove = 5;
 			}

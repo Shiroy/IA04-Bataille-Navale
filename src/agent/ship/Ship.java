@@ -13,7 +13,6 @@ import sim.engine.Steppable;
 import sim.portrayal.DrawInfo2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 import sim.util.Double2D;
-import sim.util.Int2D;
 import agent.harbor.Faction;
 import agent.ship.ShipMessage.EnnemyKilled;
 import agent.ship.ShipMessage.EnvironmentDamage;
