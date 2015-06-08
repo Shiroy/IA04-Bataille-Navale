@@ -13,11 +13,13 @@ import sim.engine.Steppable;
 import sim.portrayal.DrawInfo2D;
 import sim.portrayal.simple.OvalPortrayal2D;
 import sim.util.Double2D;
+import sim.util.Int2D;
 import agent.harbor.Faction;
 import agent.ship.ShipMessage.EnnemyKilled;
 import agent.ship.ShipMessage.EnvironmentDamage;
 import agent.ship.ShipMessage.Message;
 import agent.ship.ShipMessage.ShootReceived;
+import application.state.BattleShip;
 
 /**
  * @author antoine
@@ -26,6 +28,9 @@ import agent.ship.ShipMessage.ShootReceived;
 public class Ship extends OvalPortrayal2D implements Steppable {
 
 	private static final long serialVersionUID = 1L;
+	private int nbTickToWaitToMove = 0;
+	private Int2D position;
+	private BattleShip m_state;
 
 	/**
 	 * 
@@ -33,6 +38,12 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 	 */
 	@Override
 	public void step(SimState state) {
+		
+		if(nbTickToWaitToMove > 0)
+			nbTickToWaitToMove--;
+		
+		if(shootCooldownEnd > 0)
+			shootCooldownEnd--;
 		
 		handleAllMessage();
 		behaviourStrategy.action(this, state);
@@ -56,6 +67,22 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 	 */
 	public ShipTemplate getTemplate() {
 		return template;
+	}
+	
+	public boolean move(Int2D position) {
+		if(nbTickToWaitToMove > 0)
+			return false;
+		
+		if(position.distanceSq(this.position) > 2)
+			return false;
+		
+		this.position = position;
+		
+		m_state.map.setObjectLocation(this, (int)this.position.x, (int)this.position.y);
+		
+		nbTickToWaitToMove = getTemplate().getMaxSpeed();
+		
+		return true;
 	}
 	
 	/**
@@ -90,11 +117,18 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 		}
 	}
 	
-	public void shoot(Double2D direction)
+	public boolean shoot(Double2D direction)
 	{
-		if(shootCooldownEnd <= System.currentTimeMillis()){
+		if(shootCooldownEnd == 0){
+			Double2D origine = new Double2D(position);
+			Missile m = new Missile(direction, origine, this);
+			m_state.schedule.scheduleRepeating(m);
+			shootCooldownEnd = getTemplate().getAttackSpeed();
 			
+			return true;
 		}
+		
+		return false;
 	}
 	
 	/**
@@ -120,8 +154,11 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 		return faction;
 	}
 
-	public Ship(ShipTemplate template) {
+	public Ship(ShipTemplate template, Int2D position2, BattleShip state) {
 		this.template = template;
+		this.position = position2;
+		m_state = state;
+		state.map.setObjectLocation(this, this.position);
 		messageQueue = new LinkedList<Message>();
 		behaviourStrategy = new ShipStrategyHazardous();
 	}
@@ -140,6 +177,10 @@ public class Ship extends OvalPortrayal2D implements Steppable {
 		width = (int) (info.draw.width / 2.0);
 		height = (int) (info.draw.height / 2.0);
 		graphics.fillOval(x, y, width, height);
+	}
+	
+	public Int2D getPosition() {
+		return position;
 	}
 	
 }

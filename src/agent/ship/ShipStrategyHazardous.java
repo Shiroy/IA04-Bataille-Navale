@@ -3,6 +3,7 @@ package agent.ship;
 import sim.engine.SimState;
 import sim.field.grid.Grid2D;
 import sim.util.Bag;
+import sim.util.Double2D;
 import sim.util.Int2D;
 import sim.util.IntBag;
 import agent.ship.ShipMessage.EnnemyKilled;
@@ -39,10 +40,12 @@ public class ShipStrategyHazardous implements ShipStrategy {
 			for (Object obj : result)
 				if (obj instanceof Ship) {
 					Ship s = (Ship) obj;
-					if (s.getFaction() != ship.getFaction()) {
+					if (s.getFaction() != ship.getFaction() && s != ship) {
 						// TODO
-						; // Attack the ship
+						
+						Int2D direction = new Int2D(s.getPosition().x - ship.getPosition().x, s.getPosition().y - ship.getPosition().y);
 						action = true; // If attack succeed
+						ship.shoot(new Double2D(direction));
 					}
 				}
 		} else {
@@ -78,10 +81,11 @@ public class ShipStrategyHazardous implements ShipStrategy {
 					ym = bs.map.getHeight() + ym;
 				else if (ym >= bs.map.getHeight())
 					ym -= bs.map.getHeight();
-				bs.map.setObjectLocation(ship, new Int2D(xm, ym));
+				ship.move(new Int2D(xm, ym));
 				waitForMove = 5;
 			}
 
+			
 		}
 
 	}
