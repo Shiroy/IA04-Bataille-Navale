@@ -66,11 +66,6 @@ public class HarborStrategyNormal implements HarborStrategy {
 			harbor.setNextShip("Frigate");
 		}
 		
-<<<<<<< HEAD
-		//harbor.addWoodStock(10);
-		
-=======
->>>>>>> a60bf37ead412399af8216a5be5582dc82e3978c
 		// TODO Handle the messages. add alert message
 	}
 

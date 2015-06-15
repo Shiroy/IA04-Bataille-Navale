@@ -52,7 +52,7 @@ public class HarborStrategyMassAttack implements HarborStrategy {
 			}
 		}
 		
-		harbor.addWoodStock(10);
+		//harbor.addWoodStock(10);
 
 		// TODO Handle the messages. add alert message
 	}
